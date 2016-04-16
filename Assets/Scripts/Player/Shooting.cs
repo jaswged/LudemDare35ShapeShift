@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using ShapeShift;
+using System;
 
 public class Shooting : MonoBehaviour {
     Camera cam;
@@ -15,6 +16,11 @@ public class Shooting : MonoBehaviour {
     public float cooldown = 0.3f;
     float cooldownRemaining = 0;
 
+    public Texture fireTexture;
+    public Texture waterTexture;
+    public Texture lightningTexture;
+    public Texture earthTexture;
+
     void Awake() {
         cam = Camera.main;
         poolManager = manager.GetComponent<PoolManager>();
@@ -23,7 +29,10 @@ public class Shooting : MonoBehaviour {
     // Update is called once per frame
     void Update () {
         cooldownRemaining -= Time.deltaTime;
-	    if(Input.GetButtonDown("Fire1") && cooldownRemaining <= 0)  {
+
+        checkStateChanged();
+
+        if (Input.GetButtonDown("Fire1") && cooldownRemaining <= 0)  {
             cooldownRemaining = cooldown;
 
             GameObject mageBlast = null;
@@ -81,4 +90,40 @@ public class Shooting : MonoBehaviour {
          }*/
 #endregion
 	}
+
+    private void checkStateChanged() {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            CurrentPower = 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            CurrentPower = 2;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            CurrentPower = 3;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            CurrentPower = 4;
+        }
+    }
+
+/* fireTexture;
+   waterTexture;
+   lightningTexture;
+   earthTexture;*/
+    void OnGUI() {
+        switch (CurrentPower) {
+        case Constants.EARTH:
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), earthTexture);
+            break;
+        case Constants.FIRE:
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), fireTexture);
+            break;
+        case Constants.LIGHTNING:
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), lightningTexture);
+            break;
+        case Constants.WATER:
+            GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), waterTexture);
+            break;
+        }
+    }
 }

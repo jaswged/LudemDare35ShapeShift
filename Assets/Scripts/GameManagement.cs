@@ -39,11 +39,12 @@ public class GameManagement : MonoBehaviour {
             }
         }
 	}
-
+#warning TODO enemy spawning and pooling.
     void SpawnEnemy() {
-        Vector3 randomSpawnPoint = enemySpawnPoints[Random.Range(0,enemySpawnPoints.Length)].position;
+        print("Would spawn enemy");
+        /*Vector3 randomSpawnPoint = enemySpawnPoints[Random.Range(0,enemySpawnPoints.Length)].position;
         Instantiate(enemyEthan, randomSpawnPoint, Quaternion.identity);
-        enemiesInRound++;
+        enemiesInRound++;*/
     }
 
     public void increaseScore(float pScore) {

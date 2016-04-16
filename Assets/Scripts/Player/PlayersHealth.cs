@@ -9,6 +9,7 @@ public class PlayersHealth : MonoBehaviour{
     //[HideInInspector]
     public float health = 100f;
     public float maxHealth = 1000;
+
     public float resetAfterDeathTime = 5f;// How much time from the player dying to the level reseting.
     public AudioClip deathClip;			// The sound effect of the player dying.
     public AudioClip[] injuredClip;	
@@ -17,25 +18,24 @@ public class PlayersHealth : MonoBehaviour{
     public bool isDead;
     public float healthToShowTextureAt = 210;
 
-    public float maxEnergy = 100;
+    public float maxMana = 100;
     public float mana = 100;
-    public bool isHack;
     public Slider healthBarSlider;
-    public Slider energySlider;
+    public Slider manaSlider;
     #endregion
 
     void Awake(){
         playerHealth = this;
         healthBarSlider.maxValue = maxHealth;
         healthBarSlider.value = health;
-        energySlider.maxValue = maxEnergy;
-        energySlider.value = mana;
+        manaSlider.maxValue = maxMana;
+        manaSlider.value = mana;
     }
 
 	// Update is called once per frame
 	void Update () {
         healthBarSlider.value = health;
-        energySlider.value = mana;
+        manaSlider.value = mana;
 
         if (health <= 0f){
             if (!isDead)
@@ -111,8 +111,8 @@ public class PlayersHealth : MonoBehaviour{
     /** Called by hack Energy ball */
     internal void Manaize(int manaAmount) {
         mana += manaAmount;
-        if (mana > maxEnergy)
-            mana = maxEnergy;
+        if (mana > maxMana)
+            mana = maxMana;
         Debug.Log("Energy is now: " + mana);
     }
 #endregion

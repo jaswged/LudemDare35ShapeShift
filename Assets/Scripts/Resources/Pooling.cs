@@ -7,13 +7,13 @@ public class Pooling : MonoBehaviour {
     public static Pooling POOL;
 
     public GameObject healthOrb;
-    public GameObject energyOrb;
+    public GameObject manaOrb;
 
     public int poolAmount = 1;
     public bool willGrow = true;
 
     private List<GameObject> healthOrbs;
-    private List<GameObject> energyOrbs;
+    private List<GameObject> manaOrbs;
 #endregion
 
     void Start() {
@@ -26,11 +26,11 @@ public class Pooling : MonoBehaviour {
         }
 #endregion
 #region Energy Orbs
-        energyOrbs = new List<GameObject>();
+        manaOrbs = new List<GameObject>();
         for (int i = 0; i < poolAmount; i++) {
-            GameObject obj = (GameObject)Instantiate(energyOrb);
+            GameObject obj = (GameObject)Instantiate(manaOrb);
             obj.SetActive(false);
-            energyOrbs.Add(obj);
+            manaOrbs.Add(obj);
         }
 #endregion
     }
@@ -52,17 +52,17 @@ public class Pooling : MonoBehaviour {
         }  
     }
 
-    public GameObject GetEnergyOrb() {
-        for (int i = 0; i < energyOrbs.Count; i++) {
-            if (!energyOrbs[i].activeInHierarchy) {
-                return energyOrbs[i];
+    public GameObject GetManaOrb() {
+        for (int i = 0; i < manaOrbs.Count; i++) {
+            if (!manaOrbs[i].activeInHierarchy) {
+                return manaOrbs[i];
             }
         }
         if (willGrow) {
-            GameObject obj = (GameObject)Instantiate(energyOrb);
+            GameObject obj = (GameObject)Instantiate(manaOrb);
             obj.SetActive(false);
 
-            energyOrbs.Add(obj);
+            manaOrbs.Add(obj);
             return obj;
         }
         else {

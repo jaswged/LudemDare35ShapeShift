@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class HackEnemyHealth : MonoBehaviour {
+public class EnemyHealth : MonoBehaviour {
     public float hitPoints = 60;
     public bool isAlive = true;
     public float points = 50;
@@ -56,7 +56,7 @@ public class HackEnemyHealth : MonoBehaviour {
                 DropHealthOrb();
                 break;
             case 3:
-                DropEnergyOrb();
+                DropManaOrb();
                 break;
         }
 
@@ -83,16 +83,14 @@ public class HackEnemyHealth : MonoBehaviour {
         obj.SetActive(true);
         print("Drop Health orb yo");
         Debug.LogError("Dropping a health orb for the player.");
-    #warning TODO tadone?
     }
 
-    internal void DropEnergyOrb() {
-        Debug.LogError("Dropping Energy Orb");
-        GameObject obj = Pooling.POOL.GetEnergyOrb();
+    internal void DropManaOrb() {
+        Debug.LogError("Dropping mana Orb");
+        GameObject obj = Pooling.POOL.GetManaOrb();
         obj.transform.position = gameObject.transform.position;
         obj.SetActive(true);
-        print("Drop Energy orb yo");
-        Debug.LogError("Dropping an energy orb for the player.");
-#warning TODO TaDone?
+        print("Drop mana orb yo");
+        Debug.LogError("Dropping a mana orb for the player.");
     }
 }
