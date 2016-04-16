@@ -11,5 +11,7 @@ namespace ShapeShift {
         public const int EARTH = 2;
         public const int LIGHTNING = 3;
         public const int WATER = 4;
+
+        public static int MAIN_MENU = 0;
     }
 }
