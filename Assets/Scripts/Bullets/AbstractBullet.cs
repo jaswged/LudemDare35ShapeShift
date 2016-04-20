@@ -6,6 +6,8 @@ public class AbstractBullet : MonoBehaviour {
     private int Stage = 0;
     public int damageType;
 
+    public float damageAmount = 25f;
+
     float lifeSpan = 3.0f;
     public GameObject effect;
 
@@ -24,8 +26,10 @@ public class AbstractBullet : MonoBehaviour {
         // Show effect of attack regardless of where it hits.
 #warning TODO create effects for when the objects hit something/one
      //   Instantiate(effect, collision.transform.position, Quaternion.identity);
-        if(collision.gameObject.tag == "Enemy"){
-            // collision.gameObject.tag = "Untagged";
+
+        if(collision.collider.CompareTag("Enemy")){
+            print("Hit enemy");
+            collision.gameObject.GetComponent<EnemyHealth>().TakeDamage(damageAmount, damageType);
             //Destroy(gameObject);
             Invoke("PoolingDestroy", 0.1f);
         }
@@ -33,7 +37,8 @@ public class AbstractBullet : MonoBehaviour {
     }
 
     void Explode() {
-        gameObject.SetActive(false);
+        PoolingDestroy();
+        //gameObject.SetActive(false);
         //Destroy(gameObject);
     }
 
@@ -46,6 +51,7 @@ public class AbstractBullet : MonoBehaviour {
     }
 
     void PoolingDestroy() {
-        gameObject.SetActive(false);
+        Destroy(gameObject);
+        //gameObject.SetActive(false);
     }
 }

@@ -9,7 +9,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 469486}
   - 54: {fileID: 5416488}
-  - 114: {fileID: 11444762}
+  - 114: {fileID: 11494666}
   m_Layer: 0
   m_Name: Zippo
   m_TagString: Untagged
@@ -43,7 +43,7 @@ Transform:
   m_GameObject: {fileID: 107304}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 1, z: 1}
+  m_LocalScale: {x: 0.17932227, y: 0.35864455, z: 0.35864455}
   m_Children:
   - {fileID: 476164}
   m_Father: {fileID: 0}
@@ -108,7 +108,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &11444762
+--- !u!114 &11494666
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damageType: 1
+  damageAmount: 25
   effect: {fileID: 0}
 --- !u!136 &13670532
 CapsuleCollider:

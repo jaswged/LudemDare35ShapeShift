@@ -10,11 +10,13 @@ public class Shooting : MonoBehaviour {
     PoolManager poolManager;
     public int CurrentPower = 1;
 
-    public float arrowRange = 100f;
     public float bulletImpulse = 15f;
 
-    public float cooldown = 0.3f;
+    public float cooldown = 0.5f;
     float cooldownRemaining = 0;
+
+    public float attackManaCost = 15;
+    public float specialManaCost = 30;
 
     public Texture fireTexture;
     public Texture waterTexture;
@@ -27,17 +29,49 @@ public class Shooting : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update () {
+    void Update() {
         cooldownRemaining -= Time.deltaTime;
 
         checkStateChanged();
 
-        if (Input.GetButtonDown("Fire1") && cooldownRemaining <= 0)  {
+        if (cooldownRemaining >= 0 || PlayersHealth.playerHealth.isDead) {
+            return;
+        }
+
+        GameObject mageBlast = null;
+        if (Input.GetButtonDown("Fire1") && cooldownRemaining <= 0) {
+            //&& PlayersHealth.playerHealth.mana > attackManaCost)  {
             cooldownRemaining = cooldown;
 
-            GameObject mageBlast = null;
+          switch (CurrentPower) {
+            case Constants.EARTH:
+                mageBlast = poolManager.getPooledRock();
+                break;
+            case Constants.FIRE:
+                mageBlast = poolManager.GetPooledZippo();
+                break;
+            case Constants.LIGHTNING:
+                mageBlast = poolManager.getPooledBattery();
+                break;
+            case Constants.WATER:
+                mageBlast = poolManager.getPooledIceCube();
+                break;
+          }
 
-            switch(CurrentPower) {
+        mageBlast.SetActive(true);
+        mageBlast.transform.position = cam.transform.position;
+        mageBlast.transform.rotation = cam.transform.rotation;
+
+        //(GameObject)Instantiate(spell_prefab, cam.transform.position + cam.transform.forward, transform.rotation);
+        mageBlast.GetComponent<Rigidbody>().AddForce(cam.transform.forward * bulletImpulse, ForceMode.Impulse);
+    }
+
+        #region Harder Attack
+        if (Input.GetButtonDown("Fire2") && cooldownRemaining <= 0 && PlayersHealth.playerHealth.mana > specialManaCost) {
+        print("Harder attack");
+        cooldownRemaining = cooldown;
+
+        /*      switch (CurrentPower) {
                 case Constants.EARTH:
                     print("Earth yo");
                     mageBlast = poolManager.getPooledRock();
@@ -54,42 +88,10 @@ public class Shooting : MonoBehaviour {
                     print("Water yo");
                     mageBlast = poolManager.getPooledIceCube();
                     break;
-            }
-
-            mageBlast.transform.position = transform.position;
-            mageBlast.transform.rotation = transform.rotation;
-            mageBlast.SetActive(true);
-
-            //(GameObject)Instantiate(spell_prefab, cam.transform.position + cam.transform.forward, transform.rotation);
-            mageBlast.GetComponent<Rigidbody>().AddForce(cam.transform.forward * bulletImpulse, ForceMode.Impulse);
-         }
-  #region Arrow Simulation
-       /* else if (Input.GetButtonDown("Fire2") && cooldownRemaining <= 0)
-            {
-            cooldownRemaining = cooldown;
-
-            Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
-            RaycastHit hitInfo;
-
-            if(Physics.Raycast(ray, out hitInfo, arrowRange))  {
-                Vector3 hitPoint = hitInfo.point;
-                GameObject go = hitInfo.collider.gameObject;
-
-                HasHealth health = go.GetComponent<HasHealth>();
-                if(health!=null) {
-                    health.RecieveDamage(damage);
-                 }
-
-                // Create hit animation
-                if (arrowPrefab != null)  {
-                    //Instantiate(arrowPrefab, hitPoint, Quaternion.identity);
-                    Instantiate(arrowPrefab, hitPoint, Quaternion.Euler(hitInfo.normal));
-                    
-                  }
-              }
-         }*/
-#endregion
-	}
+                }*/
+        }// End hard attack
+        #endregion
+    }//End of Update
 
     private void checkStateChanged() {
         if (Input.GetKeyDown(KeyCode.Alpha1)) {
@@ -106,10 +108,6 @@ public class Shooting : MonoBehaviour {
         }
     }
 
-/* fireTexture;
-   waterTexture;
-   lightningTexture;
-   earthTexture;*/
     void OnGUI() {
         switch (CurrentPower) {
         case Constants.EARTH:

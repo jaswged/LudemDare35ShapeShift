@@ -13,34 +13,47 @@ public class EnemyHealth : MonoBehaviour {
     private static PauseMenu pauseMenu;
     private static GameObject player;
 
-    public float secondsUntilOffScreen = 3;
+    public int enemyType;
+
+    public float secondsUntilOffScreen = .5f;
 
     void Awake() {
         anim = GetComponent<Animator>();
     //TODO: test to make sure that this code works. 
         pauseMenu = pauseMenu ?? Camera.main.GetComponent<PauseMenu>();
         player = player ?? GameObject.FindGameObjectWithTag("Player");
+        enemyType = getNewEnemyType();
         //HACK AI. fps = gameObject.GetComponent<FpsCompilation>();
     }
 
     void OnEnable(){ 
         hitPoints = maxHealth;
         isAlive = true;
+        enemyType = getNewEnemyType();
+
     }
 
     void OnDisable(){  }
 
-    public void TakeDamage(float damage) {
-        Debug.Log("Enemy took " + damage + " damage!");
-        hitPoints -= damage;
+    public void TakeDamage(float damage, int damageType) {
+        // if damage type is strong against this enemy do the damage.
+        if (damageType == enemyType) {
+            Debug.Log("Enemy took " + damage + " damage!");
+            hitPoints -= damage;
+        }
+
         if (hitPoints <= 0 && isAlive) {
             Debug.Log("Enemy is Dying now");
             Die();
         }
     }
 
+    private int getNewEnemyType() {
+        return Random.Range(1, 4);
+    }
+
     void Die() {
-        anim.SetTrigger("isDead");
+        //anim.SetTrigger("isDead");
         AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, .8f);
 
 #warning TODO This needs to be object pooled still?
@@ -70,27 +83,23 @@ public class EnemyHealth : MonoBehaviour {
         this.enabled = false;
 
         Invoke("DieIMeanDisable", secondsUntilOffScreen);
-        }
+    }
 
     private void DieIMeanDisable() {
         gameObject.SetActive(false);
     }
 
     internal void DropHealthOrb() {
-        Debug.LogError("Dropping Health Orb");
+        Debug.LogWarning("Dropping a health orb for the player.");
         GameObject obj = Pooling.POOL.GetHealthOrb();
         obj.transform.position = gameObject.transform.position;
         obj.SetActive(true);
-        print("Drop Health orb yo");
-        Debug.LogError("Dropping a health orb for the player.");
     }
 
     internal void DropManaOrb() {
-        Debug.LogError("Dropping mana Orb");
+        Debug.LogWarning("Dropping a mana orb for the player.");
         GameObject obj = Pooling.POOL.GetManaOrb();
         obj.transform.position = gameObject.transform.position;
         obj.SetActive(true);
-        print("Drop mana orb yo");
-        Debug.LogError("Dropping a mana orb for the player.");
     }
 }

@@ -13,7 +13,7 @@ GameObject:
   - 23: {fileID: 2340298}
   m_Layer: 0
   m_Name: EnemyModel
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +28,8 @@ GameObject:
   - 4: {fileID: 422484}
   - 114: {fileID: 11481622}
   - 195: {fileID: 19567102}
-  - 114: {fileID: 11478934}
+  - 114: {fileID: 11433544}
+  - 136: {fileID: 13642222}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -94,7 +95,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 117630}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &11478934
+--- !u!114 &11433544
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -102,17 +103,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 179594}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4752fe46d4e4d54ba8bece291f15c1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 1cb98425daba62543a146e0c91e4747a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 60
-  isAlive: 1
-  points: 50
-  deathClip: []
-  injuredClips: []
-  maxHealth: 60
-  timeToDie: 7
-  secondsUntilOffScreen: 3
 --- !u!114 &11481622
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -124,14 +117,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c4752fe46d4e4d54ba8bece291f15c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 60
+  hitPoints: 50
   isAlive: 1
   points: 50
-  deathClip: []
-  injuredClips: []
+  deathClip:
+  - {fileID: 8300000, guid: 34c9702fef9b05f42b3ba01e282aabf3, type: 3}
+  injuredClips:
+  - {fileID: 8300000, guid: ae8158c34291edc40b58ba8d6a9e6b01, type: 3}
   maxHealth: 60
   timeToDie: 7
-  secondsUntilOffScreen: 3
+  secondsUntilOffScreen: 0.5
+--- !u!136 &13642222
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 179594}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2.02
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13661908
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -140,7 +148,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 117630}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5
   m_Height: 2
   m_Direction: 1
